@@ -1,0 +1,14 @@
+version: "3"
+services:
+  web:
+    build:
+      context: ../
+      dockerfile: .devcontainer/infra/NextJs/Dockerfile
+    env_file:
+      - .env
+    tty: true
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - ../:/nextjs
+      - ~/.gitconfig:/nextjs/.gitconfig
