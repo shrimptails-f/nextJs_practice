@@ -1,4 +1,15 @@
 import { GetServerSideProps } from 'next'
+import {
+  Container,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from '@mui/material'
 
 type User = {
   id: number
@@ -12,16 +23,29 @@ type Props = {
 
 const UsersPage = ({ users }: Props) => {
   return (
-    <div>
-      <h1>ユーザー一覧</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name}（{user.email}）
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        ユーザー管理
+      </Typography>
+      <TableContainer component={Paper} elevation={3}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell><strong>UserName</strong></TableCell>
+              <TableCell><strong>メールアドレス</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   )
 }
 
