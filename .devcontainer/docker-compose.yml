@@ -12,3 +12,9 @@ services:
     volumes:
       - ../:/nextjs
       - ~/.gitconfig:/nextjs/.gitconfig
+    networks:
+      - practice
+
+networks:
+  practice:
+    external: true
