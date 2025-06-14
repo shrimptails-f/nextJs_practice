@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   Container,
   Typography,
@@ -10,6 +11,7 @@ import {
   Paper,
 } from '@mui/material'
 
+import { useUserStore } from '@/store/userStore'
 import apiClient from '@/util/axios'
 
 type User = {
@@ -23,6 +25,12 @@ type Props = {
 }
 
 const UsersPage = ({ users }: Props) => {
+  const { setUsers } = useUserStore()
+  useEffect(() => {
+    setUsers(users)
+  }, [users, setUsers])
+  const { users: userList, setEditingUser, deleteUser } = useUserStore()
+
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
       <Typography variant="h4" gutterBottom>
@@ -37,7 +45,7 @@ const UsersPage = ({ users }: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {userList.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
