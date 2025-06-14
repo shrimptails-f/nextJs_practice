@@ -1,21 +1,32 @@
 import { useState } from 'react'
-import {
-  Container,
-  TextField,
-  Typography,
-  Button,
-  Box,
-  Paper
-} from '@mui/material'
 import { useRouter } from 'next/router'
+import { Container, Paper, Typography, Box, TextField, Button } from '@mui/material'
+import { z } from 'zod'
 import apiClient from '@/util/axios'
+
+// Zodスキーマ定義
+const UserSchema = z.object({
+  name: z.string().min(1, '名前は必須です'),
+  email: z.string().min(1, 'メールアドレスは必須です').email('メールアドレスの形式が不正です')
+})
 
 const UserCreatePage = () => {
   const router = useRouter()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({})
 
   const handleSubmit = async () => {
+    const result = UserSchema.safeParse({ name, email })
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors
+      setErrors({
+        name: fieldErrors.name?.[0],
+        email: fieldErrors.email?.[0]
+      })
+      return
+    }
+
     try {
       await apiClient.post('users', { name, email })
       router.push('/users')
@@ -37,6 +48,8 @@ const UserCreatePage = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            error={!!errors.name}
+            helperText={errors.name}
           />
           <TextField
             label="メールアドレス"
@@ -44,6 +57,8 @@ const UserCreatePage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            error={!!errors.email}
+            helperText={errors.email}
           />
           <Button variant="contained" color="primary" onClick={handleSubmit}>
             登録
