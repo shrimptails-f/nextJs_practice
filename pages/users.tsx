@@ -1,4 +1,3 @@
-import { GetServerSideProps } from 'next'
 import {
   Container,
   Typography,
@@ -10,6 +9,8 @@ import {
   TableRow,
   Paper,
 } from '@mui/material'
+
+import apiClient from '@/util/axios'
 
 type User = {
   id: number
@@ -49,13 +50,18 @@ const UsersPage = ({ users }: Props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const res = await fetch('http://rails_practice_devcontainer-app-1:4000/', {
-    headers: {
-      Accept: 'application/json',
-    },
-  })
-  const users = await res.json()
+export const getServerSideProps = async () => {
+  let users: User[] = []
+  try {
+    const res = await apiClient.get<User[]>('users')
+    users = res.data
+  } catch (error: any) {
+    if (error.response) {
+      console.error('APIエラー:', error.response.data)
+    } else {
+      console.error('接続エラー:', error.message)
+    }
+  }
 
   return {
     props: {
