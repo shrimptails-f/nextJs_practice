@@ -1,14 +1,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { Container, Paper, Typography, Box, TextField, Button } from '@mui/material'
-import { z } from 'zod'
 import apiClient from '@/util/axios'
-
-// Zodスキーマ定義
-const UserSchema = z.object({
-  name: z.string().min(1, '名前は必須です'),
-  email: z.string().min(1, 'メールアドレスは必須です').email('メールアドレスの形式が不正です')
-})
+import { UserSchema } from '@/schemas/users/createVlidation'
 
 const UserCreatePage = () => {
   const router = useRouter()
