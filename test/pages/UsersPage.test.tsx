@@ -14,6 +14,21 @@ jest.mock('@/store/userStore', () => {
     }
 })
 
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    route: '/',
+    pathname: '/',
+    query: {},
+    asPath: '/',
+    back: jest.fn(),
+    reload: jest.fn(),
+    isFallback: false,
+  }),
+}))
+
 describe('UsersPage', () => {
     const mockSetUsers = jest.fn()
     const mockSetEditingUser = jest.fn()
