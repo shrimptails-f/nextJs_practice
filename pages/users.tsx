@@ -9,10 +9,13 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
+  Box,
 } from '@mui/material';
 
 import { useUserStore } from '@/store/userStore';
 import apiClient, { handleApiError } from '@/util/axios';
+import { useRouter } from 'next/router';
 
 type User = {
   id: number;
@@ -25,6 +28,7 @@ type Props = {
 };
 
 const UsersPage = ({ users }: Props) => {
+  const router = useRouter();
   const { setUsers } = useUserStore();
   useEffect(() => {
     setUsers(users);
@@ -33,9 +37,12 @@ const UsersPage = ({ users }: Props) => {
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        ユーザー管理
-      </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4">ユーザー管理</Typography>
+        <Button variant="contained" color="primary" onClick={() => router.push('/user/create')}>
+          新規登録
+        </Button>
+      </Box>
       <TableContainer component={Paper} elevation={3}>
         <Table>
           <TableHead>
@@ -62,6 +69,7 @@ const UsersPage = ({ users }: Props) => {
   );
 };
 
+// SSGで済む実装で良いが、SSRの練習もしたいのでこのままにしておく
 export const getServerSideProps = async () => {
   let users: User[] = [];
   try {
