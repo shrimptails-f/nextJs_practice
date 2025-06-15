@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -10,30 +10,30 @@ import {
   TableRow,
   Paper,
   Button,
-  Box
-} from '@mui/material'
+  Box,
+} from '@mui/material';
 
-import { useUserStore } from '@/store/userStore'
-import apiClient from '@/util/axios'
-import { useRouter } from 'next/router'
+import { useUserStore } from '@/store/userStore';
+import apiClient, { handleApiError } from '@/util/axios';
+import { useRouter } from 'next/router';
 
 type User = {
-  id: number
-  name: string
-  email: string
-}
+  id: number;
+  name: string;
+  email: string;
+};
 
 type Props = {
-  users: User[]
-}
+  users: User[];
+};
 
 const UsersPage = ({ users }: Props) => {
-  const router = useRouter() 
-  const { setUsers } = useUserStore()
+  const router = useRouter();
+  const { setUsers } = useUserStore();
   useEffect(() => {
-    setUsers(users)
-  }, [users, setUsers])
-  const { users: userList, setEditingUser, deleteUser } = useUserStore()
+    setUsers(users);
+  }, [users, setUsers]);
+  const { users: userList } = useUserStore();
 
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
@@ -47,8 +47,12 @@ const UsersPage = ({ users }: Props) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell><strong>UserName</strong></TableCell>
-              <TableCell><strong>メールアドレス</strong></TableCell>
+              <TableCell>
+                <strong>UserName</strong>
+              </TableCell>
+              <TableCell>
+                <strong>メールアドレス</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,28 +66,24 @@ const UsersPage = ({ users }: Props) => {
         </Table>
       </TableContainer>
     </Container>
-  )
-}
+  );
+};
 
 // SSGで済む実装で良いが、SSRの練習もしたいのでこのままにしておく
 export const getServerSideProps = async () => {
-  let users: User[] = []
+  let users: User[] = [];
   try {
-    const res = await apiClient.get<User[]>('users')
-    users = res.data
-  } catch (error: any) {
-    if (error.response) {
-      console.error('APIエラー:', error.response.data)
-    } else {
-      console.error('接続エラー:', error.message)
-    }
+    const res = await apiClient.get<User[]>('users');
+    users = res.data;
+  } catch (error: unknown) {
+    handleApiError(error);
   }
 
   return {
     props: {
       users,
     },
-  }
-}
+  };
+};
 
-export default UsersPage
+export default UsersPage;
