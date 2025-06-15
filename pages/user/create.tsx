@@ -1,34 +1,34 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import { Container, Paper, Typography, Box, TextField, Button } from '@mui/material'
-import apiClient from '@/util/axios'
-import { UserSchema } from '@/schemas/users/createVlidation'
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Container, Paper, Typography, Box, TextField, Button } from '@mui/material';
+import apiClient from '@/util/axios';
+import { UserSchema } from '@/schemas/users/createValidation';
 
 const UserCreatePage = () => {
-  const router = useRouter()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [errors, setErrors] = useState<{ name?: string; email?: string }>({})
+  const router = useRouter();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
 
   const handleSubmit = async () => {
-    const result = UserSchema.safeParse({ name, email })
+    const result = UserSchema.safeParse({ name, email });
     if (!result.success) {
-      const fieldErrors = result.error.flatten().fieldErrors
+      const fieldErrors = result.error.flatten().fieldErrors;
       setErrors({
         name: fieldErrors.name?.[0],
-        email: fieldErrors.email?.[0]
-      })
-      return
+        email: fieldErrors.email?.[0],
+      });
+      return;
     }
 
     try {
-      await apiClient.post('users', { name, email })
-      router.push('/users')
+      await apiClient.post('users', { name, email });
+      router.push('/users');
     } catch (error) {
-      console.error('ユーザー作成失敗:', error)
-      alert('登録に失敗しました')
+      console.error('ユーザー作成失敗:', error);
+      alert('登録に失敗しました');
     }
-  }
+  };
 
   return (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
@@ -61,7 +61,7 @@ const UserCreatePage = () => {
         </Box>
       </Paper>
     </Container>
-  )
-}
+  );
+};
 
-export default UserCreatePage
+export default UserCreatePage;
