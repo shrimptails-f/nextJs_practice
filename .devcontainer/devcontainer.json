@@ -1,16 +1,22 @@
 {
-    "name": "NextJs Practice DevContainer",
-    "dockerComposeFile": "docker-compose.yml",
-    "service": "web",
-    "workspaceFolder": "/nextjs",
-    "postCreateCommand": "task setup",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "editorconfig.editorconfig", // エディタを跨いだ共通設定ファイルをVsCodeで実行するのに必要
-                "ms-azuretools.vscode-docker", // VsCodeでのIntelliSenseやタブ補完用
-                "saoudrizwan.claude-dev" // AIコーディングサポート
-            ]
-        }
+  "name": "NextJs Practice DevContainer",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "web",
+  "workspaceFolder": "/nextjs",
+  "postCreateCommand": "task setup",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "editorconfig.editorconfig", // エディタを跨いだ共通設定ファイルをVsCodeで実行するのに必要
+        "ms-azuretools.vscode-docker", // VsCodeでのIntelliSenseやタブ補完用
+        "saoudrizwan.claude-dev", // AIコーディングサポート
+        "streetsidesoftware.code-spell-checker", // スペルチェック
+        "yoavbls.pretty-ts-errors", // エラーを見やすくする。ただし英語設定じゃないと色がつかない
+        "chakrounanas.turbo-console-log", // console logを自動で追加するショートカットを追加
+        // ↑ ctrl + Dで変数を指定 → ctrl + alt  + Lで次の行に追加してくれる。
+        "esbenp.prettier-vscode", // フォーマッタ
+        "dbaeumer.vscode-eslint" // リンタ
+      ]
     }
+  }
 }

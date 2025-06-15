@@ -3,12 +3,12 @@
 version: '3'
 
 env:
-  MIGRATION_ROOT: "tools/migrations"
-  SEED_ROOT: "tools/seeder"
+  MIGRATION_ROOT: 'tools/migrations'
+  SEED_ROOT: 'tools/seeder'
 
 tasks:
   setup:
-    desc: "ローカル環境のセットアップを行う。(gitコマンドが使用できるようにする)"
+    desc: 'ローカル環境のセットアップを行う。(gitコマンドが使用できるようにする)'
     cmds:
       - cp {{.APP_ROOT}}/.gitconfig /root/.gitconfig
       - git config --global core.autocrlf input
