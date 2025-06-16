@@ -51,7 +51,7 @@ const UserCreatePage = () => {
     <Container maxWidth="sm" sx={{ mt: 4 }}>
       <Paper sx={{ p: 4 }}>
         <Typography variant="h5" gutterBottom>
-          ユーザー新規登録
+          ユーザー編集
         </Typography>
         <Box display="flex" flexDirection="column" gap={2}>
           <TextField
@@ -78,7 +78,7 @@ const UserCreatePage = () => {
             helperText={errors.email}
           />
           <Button variant="contained" color="primary" onClick={handleSubmit}>
-            登録
+            更新
           </Button>
           <Button onClick={() => router.back()}>戻る</Button>
         </Box>
