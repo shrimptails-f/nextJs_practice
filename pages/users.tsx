@@ -69,7 +69,7 @@ const UsersPage = ({ users }: Props) => {
   );
 };
 
-// SSGで済む実装で良いが、SSRの練習もしたいのでこのままにしておく
+// CSRで済む実装で良いが、SSRの練習もしたいのでこのままにしておく
 export const getServerSideProps = async () => {
   let users: User[] = [];
   try {
