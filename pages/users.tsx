@@ -53,6 +53,9 @@ const UsersPage = ({ users }: Props) => {
               <TableCell>
                 <strong>メールアドレス</strong>
               </TableCell>
+              <TableCell align="center" sx={{ width: 100 }}>
+                <strong>編集</strong>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -60,6 +63,15 @@ const UsersPage = ({ users }: Props) => {
               <TableRow key={user.id}>
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
+                <TableCell align="center" sx={{ width: 100 }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => router.push('/user/' + user.id + '/edit')}
+                  >
+                    編集
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
